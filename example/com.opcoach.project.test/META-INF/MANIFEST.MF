@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: com.opcoach.project.test
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Bundle-SymbolicName: com.opcoach.project.test;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.emf.ecore
