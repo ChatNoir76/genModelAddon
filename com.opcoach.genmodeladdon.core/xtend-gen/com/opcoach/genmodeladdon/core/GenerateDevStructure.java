@@ -1,11 +1,5 @@
 package com.opcoach.genmodeladdon.core;
 
-import com.google.common.collect.Iterables;
-import com.opcoach.genmodeladdon.core.GMAConstants;
-import com.opcoach.genmodeladdon.core.GenerateAntFileForCodeGeneration;
-import com.opcoach.genmodeladdon.core.GenerateCommon;
-import com.opcoach.genmodeladdon.core.GenerateExtensions;
-import com.opcoach.genmodeladdon.core.genmodel.GMAGenModel;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 import org.eclipse.ant.core.AntRunner;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -41,7 +36,7 @@ import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.jdt.core.IClasspathEntry;
 import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
-import org.eclipse.pde.internal.core.PDECore;
+import org.eclipse.pde.internal.core.PluginModelManager;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.ArrayExtensions;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -49,6 +44,9 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.InputOutput;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+
+import com.google.common.collect.Iterables;
+import com.opcoach.genmodeladdon.core.genmodel.GMAGenModel;
 
 /**
  * This class is used to proceed the different steps to generate the development structure
@@ -359,7 +357,7 @@ public class GenerateDevStructure implements IResourceChangeListener {
           throw Exceptions.sneakyThrow(_t);
         }
       } finally {
-        PDECore.getDefault().getModelManager().bundleRootChanged(this.project);
+    	  PluginModelManager.getInstance().targetReloaded(new NullProgressMonitor());
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);

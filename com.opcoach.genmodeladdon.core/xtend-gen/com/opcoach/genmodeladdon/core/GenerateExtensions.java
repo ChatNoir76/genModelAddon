@@ -2,8 +2,10 @@ package com.opcoach.genmodeladdon.core;
 
 import java.util.Map;
 import java.util.Set;
+
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.pde.core.plugin.IPluginAttribute;
 import org.eclipse.pde.core.plugin.IPluginElement;
 import org.eclipse.pde.core.plugin.IPluginExtension;
@@ -11,7 +13,7 @@ import org.eclipse.pde.core.plugin.IPluginExtensionPoint;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.IPluginObject;
 import org.eclipse.pde.core.plugin.PluginRegistry;
-import org.eclipse.pde.internal.core.PDECore;
+import org.eclipse.pde.internal.core.PluginModelManager;
 import org.eclipse.pde.internal.core.bundle.WorkspaceBundlePluginModel;
 import org.eclipse.pde.internal.core.project.PDEProject;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -73,7 +75,7 @@ class GenerateExtensions {
       for (final IPluginExtension e : _extensions) {
         this.fModel.getPluginBase().add(this.copyExtension(e));
       }
-      PDECore.getDefault().getModelManager().bundleRootChanged(this.project);
+      PluginModelManager.getInstance().targetReloaded(new NullProgressMonitor());
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -185,7 +187,7 @@ class GenerateExtensions {
       this.generateOrUpdateExtension(GenerateExtensions.EMF_GENERATED_PACKAGE, entry_1.getKey(), GenerateExtensions.PACKAGE_ELT, entry_1.getValue());
     }
     this.fModel.save();
-    PDECore.getDefault().getModelManager().bundleRootChanged(this.project);
+    PluginModelManager.getInstance().targetReloaded(new NullProgressMonitor());
   }
   
   private void generateOrUpdateExtension(final String extName, final String modelURI, final String nodeName, final String classname) {
